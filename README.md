@@ -13,3 +13,16 @@ This is a very basic script that parses that document and formats it into the mo
 format.
 
 Should be handy if you're building something like an emoji picker.
+
+### Usage
+
+1. You can download and use the [emoji-test.json](emoji-test.json) file included in this package
+   directly.
+
+2. You can download this package and run
+
+```
+node parse_emojis.js
+```
+
+to generate the json yourself.
