@@ -1,6 +1,7 @@
-### TLDR;
-
 JSON version of the official emoji list published by Unicode.
+
+Generated from [emoji-test.txt](https://unicode.org/Public/emoji/latest/emoji-test.txt) with
+[this script](parse_emojis.js).
 
 ### Details
 
