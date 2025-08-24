@@ -61,4 +61,4 @@ for (const line of emojiFileContentArray) {
 }
 
 const jsonString = JSON.stringify(JSONObject, null, 2);
-fs.writeFileSync("emojis-test.json", jsonString);
+fs.writeFileSync("emoji-test.json", jsonString);
