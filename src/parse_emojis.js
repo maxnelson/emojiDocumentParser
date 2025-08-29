@@ -8,6 +8,7 @@ const JSONObject = { categories: [] };
 
 let currentCategoryObject;
 let currentEmojiObject;
+let previousEmojiName;
 
 for (const line of emojiFileContentArray) {
 	if (line === "") {
@@ -36,73 +37,36 @@ for (const line of emojiFileContentArray) {
 			//REMOVE DECIMAL NUMBER FROM EMOJI NAME
 			let emojiName = remove_decimal_number(emojiMetadataSplit[0]).split(" ").join("-");
 			let emojiID;
-
-			let currentEmojiObject = {
-				emoji: emoji,
-				variants: []
-			};
-			//If contains skin tone, put it under variants
 			if (emojiMetadataSplit.length === 1) {
 				emojiID = emojiName;
 			} else {
-				count1++;
 				emojiID =
 					emojiName +
 					"-" +
 					emojiMetadataSplit[1].trim().replaceAll(",", "").replaceAll(" ", "-");
 			}
-			if (emojiID.includes("skin-tone")) {
-				currentEmojiObject.variants.push();
-			} else console.log(emojiMetadataSplit);
-			console.log(emojiID);
-			//console.log(currentCategoryObject);
-			/*
-			if (emojiID.includes("skin-tone")) {
-				currentEmojiObject.variants = [];
-				currentCategoryObject = currentEmojiObject.variants;
+			if (emojiName === "flag") {
+				console.log(emojiMetadataSplit);
+				currentCategoryObject.push({
+					emoji: emoji,
+					id: emojiID,
+					variants: []
+				});
+				currentEmojiObject = currentCategoryObject.at(-1);
+			} else if (previousEmojiName !== emojiName) {
+				currentCategoryObject.push({
+					emoji: emoji,
+					id: emojiID,
+					variants: []
+				});
+				currentEmojiObject = currentCategoryObject.at(-1);
+			} else {
+				currentEmojiObject.variants.push({
+					emoji: emoji,
+					id: emojiID
+				});
 			}
-			currentEmojiObject.id = emojiID;
-			currentCategoryObject.push(currentEmojiObject);
-      */
-			//console.log(emojiID);
-
-			/*
-      console.log("DELIMITER");
-      console.log(emojiMetadataSplit.length);
-      console.log(emojiMetadataSplit[0]);
-      console.log(emojiMetadataSplit[1]);
-      let emojiDescription = emojiMetadataSplit[1];
-      let skinTone = "";
-      let emojiNameLong = "";
-      const skinToneExists = emojiDescription?.includes("skin tone");
-      if (emojiDescription) {
-        emojiNameLong = emojiName + "-" + emojiDescription?.trim();
-      }
-      if (skinToneExists) {
-        skinTone = emojiDescription
-          ?.split("skin tone")
-          .join("")
-          .replaceAll(",", "")
-          .replaceAll(" ", "-");
-        emojiNameLong = emojiNameLong.split(" skin tone")[0];
-      }
-      console.log(currentCategoryObject);
-      if (emojiName === "flag") {
-        currentCategoryObject = currentCategoryObject.items.at(-1);
-      } else if (previousEmojiName !== emojiName) {
-      } else {
-        //DO NOTHING
-      }
-      const currentEmojiObject = {
-        emoji: emoji,
-        id: emojiNameLong || emojiName,
-        variants: [],
-      };
-      console.log(emojiMetadataSplit);
-      console.log(currentCategoryObject);
-      currentCategoryObject.items.push(currentEmojiObject);
-      previousEmojiName = emojiName;
-      */
+			previousEmojiName = emojiName;
 		}
 	}
 }
